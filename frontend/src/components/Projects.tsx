@@ -24,6 +24,21 @@ function ProjectCard({
   total: number;
   sectionProgress: MotionValue<number>;
 }) {
+  // Compute how far behind this card is (depth) for darkening
+  const depthRange: number[] = [];
+  const darkenRange: number[] = [];
+  if (total <= 1) {
+    depthRange.push(0, 1);
+    darkenRange.push(0, 0);
+  } else {
+    for (let front = 0; front < total; front++) {
+      const p = front / (total - 1);
+      const depth = Math.max(0, front - index);
+      depthRange.push(p);
+      darkenRange.push(Math.min(depth * 0.12, 0.35)); // 12% darker per layer, max 35%
+    }
+  }
+  const darkenOpacity = useTransform(sectionProgress, depthRange, darkenRange);
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -67,8 +82,13 @@ function ProjectCard({
     >
       <motion.div
         style={{ scale, height: 'calc(100vh - 220px)' }}
-        className="w-full max-w-[92%] overflow-hidden grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-sm border border-gray-100 bg-white"
+        className="w-full max-w-[92%] overflow-hidden grid grid-cols-1 md:grid-cols-2 rounded-3xl shadow-sm border border-gray-100 bg-white relative"
       >
+        {/* Darkening overlay for stacked cards */}
+        <motion.div
+          style={{ opacity: darkenOpacity }}
+          className="absolute inset-0 bg-black rounded-3xl z-30 pointer-events-none"
+        />
         {/* Image */}
         <div className="relative bg-gray-200 order-1" style={{ height: '100%' }}>
           <img
@@ -89,7 +109,7 @@ function ProjectCard({
 
           <div className="flex flex-wrap gap-4 mb-10 items-center">
             {project.techLogos?.map((logo: string, i: number) => (
-              <img key={i} src={logo} alt="Tech" className="h-8 md:h-9 object-contain grayscale hover:grayscale-0 transition-all" />
+              <img key={i} src={logo} alt="Tech" className="h-8 md:h-9 object-contain transition-all" />
             ))}
             {!project.techLogos?.length && project.tags?.map((tag: string, i: number) => (
               <span key={i} className="px-3 py-1.5 bg-gray-50 rounded-full text-xs font-semibold uppercase tracking-wider border border-gray-200 text-gray-600">
