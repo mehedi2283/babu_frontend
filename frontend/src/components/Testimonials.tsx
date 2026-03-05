@@ -74,7 +74,7 @@ export default function Testimonials({ profile }: any) {
             <h2 className="font-serif italic text-2xl text-gray-900">Trusted by Global Leaders</h2>
           </div>
           <div className="hidden md:block text-sm font-mono text-gray-400 uppercase tracking-widest">
-            // 04 CLIENT FEEDBACK
+            // {allTestimonials.length < 10 ? `0${allTestimonials.length}` : allTestimonials.length} CLIENT FEEDBACK
           </div>
         </div>
 
