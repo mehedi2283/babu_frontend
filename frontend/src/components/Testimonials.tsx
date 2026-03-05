@@ -85,10 +85,10 @@ export default function Testimonials({ profile }: any) {
             animate={{ x: [0, -1000] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            {[...clientLogos, ...clientLogos].map((logo, i) => (
+            {[...(profile?.logos?.length > 0 ? profile.logos : clientLogos), ...(profile?.logos?.length > 0 ? profile.logos : clientLogos)].map((logo: any, i) => (
               <div key={i} className="flex items-center gap-3 group cursor-pointer">
                 <img
-                  src={logo.url}
+                  src={logo.url || logo.imageUrl}
                   alt={logo.name}
                   className="h-8 w-auto object-contain transition-all duration-300 filter grayscale group-hover:grayscale-0"
                   referrerPolicy="no-referrer"
