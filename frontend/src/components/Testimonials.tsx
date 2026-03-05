@@ -90,7 +90,7 @@ export default function Testimonials({ profile }: any) {
                 <img
                   src={logo.url || logo.imageUrl}
                   alt={logo.name}
-                  className="h-8 w-auto object-contain transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                  className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
                 <span className="text-xl font-bold tracking-tighter text-gray-300 group-hover:text-gray-900 transition-colors">
