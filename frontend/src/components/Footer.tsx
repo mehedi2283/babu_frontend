@@ -51,10 +51,10 @@ export default function Footer({ profile }: any) {
     ];
 
     const navLinks = [
-        { label: 'Work', href: '#work' },
-        { label: 'About', href: '#about' },
-        { label: 'Testimonials', href: '#testimonials' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'Work', href: '/#work' },
+        { label: 'About', href: '/#about' },
+        { label: 'Testimonials', href: '/#testimonials' },
+        { label: 'Contact', href: '/#contact' },
         { label: 'All Projects', href: '/projects', isRoute: true },
     ];
 

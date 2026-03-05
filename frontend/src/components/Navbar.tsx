@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar({ profile }: any) {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
+      e.preventDefault();
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -25,9 +25,9 @@ export default function Navbar({ profile }: any) {
           )}
         </Link>
         <div className="flex gap-10 text-base font-semibold tracking-tight">
-          <a href="#work" onClick={(e) => scrollToSection(e, 'work')} className="hover:opacity-50 transition-opacity">Work</a>
-          <a href="#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:opacity-50 transition-opacity">About</a>
-          <a href="#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:opacity-50 transition-opacity">Contact</a>
+          <a href="/#work" onClick={(e) => scrollToSection(e, 'work')} className="hover:opacity-50 transition-opacity">Work</a>
+          <a href="/#about" onClick={(e) => scrollToSection(e, 'about')} className="hover:opacity-50 transition-opacity">About</a>
+          <a href="/#contact" onClick={(e) => scrollToSection(e, 'contact')} className="hover:opacity-50 transition-opacity">Contact</a>
         </div>
       </div>
     </nav>
