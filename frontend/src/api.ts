@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// Use the production URL if deployed, otherwise fallback to /api for local proxy
+const isProd = import.meta.env.PROD;
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: isProd ? 'https://babu-server.onrender.com/api' : '/api',
 });
 
 api.interceptors.request.use((config) => {
