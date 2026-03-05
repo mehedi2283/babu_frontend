@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue, useMotionValueEvent } from 'framer-motion';
 import api from '../api';
 
 function topForDepth(depth: number): number {
@@ -133,11 +133,20 @@ function AllProjectCard({
 export default function AllProjects() {
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [activeIndex, setActiveIndex] = useState(0);
     const sectionRef = useRef(null);
 
     const { scrollYProgress: sectionProgress } = useScroll({
         target: sectionRef,
         offset: ['start start', 'end end'],
+    });
+
+    useMotionValueEvent(sectionProgress, "change", (latest) => {
+        if (projects.length === 0) return;
+        // Map the 0-1 progress to an index between 0 and length-1
+        // We subtract a tiny bit (0.01) from latest so exactly 1.0 doesn't overflow to length
+        const index = Math.max(0, Math.min(projects.length - 1, Math.floor(latest * projects.length)));
+        setActiveIndex(index);
     });
 
     useEffect(() => {
@@ -156,8 +165,37 @@ export default function AllProjects() {
     }
 
     return (
-        <main className="bg-white min-h-screen pt-24 pb-20 overflow-visible">
-            <div className="max-w-[92%] mx-auto mb-16 flex items-end justify-between px-4">
+        <main className="bg-white min-h-screen pt-24 pb-20 overflow-visible relative">
+
+            {/* Fixed Vertical Pagination */}
+            {projects.length > 0 && (
+                <div className="hidden lg:flex fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 z-50 flex-col gap-4">
+                    {projects.map((_, i) => (
+                        <div
+                            key={i}
+                            className={`transition-all duration-300 font-mono text-sm font-bold flex items-center justify-center rounded-full cursor-pointer
+                                ${activeIndex === i
+                                    ? 'w-10 h-10 shadow-[0_0_20px_rgba(139,92,246,0.5)] bg-violet-600 text-white translate-x-1 lg:translate-x-2'
+                                    : 'w-8 h-8 text-gray-400 bg-white shadow-sm border border-gray-200'}`}
+                            onClick={() => {
+                                // Optional user click scroll logic.
+                                // For simplicity, we just let it visual-track.
+                                const percentage = i / projects.length;
+                                // Simple scroll estimation:
+                                if (sectionRef.current) {
+                                    const rect = (sectionRef.current as any).getBoundingClientRect();
+                                    const scrollTo = window.scrollY + rect.top + (rect.height * percentage);
+                                    window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+                                }
+                            }}
+                        >
+                            {String(i + 1).padStart(2, '0')}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            <div className="max-w-[92%] mx-auto mb-16 flex items-end justify-between px-4 lg:pl-20">
                 <div>
                     <h1 className="text-5xl md:text-6xl font-bold text-gray-900">All Projects</h1>
                     <p className="text-gray-500 mt-4 leading-relaxed max-w-xl">
@@ -175,7 +213,7 @@ export default function AllProjects() {
                 </Link>
             </div>
 
-            <section ref={sectionRef} className="relative w-full">
+            <section ref={sectionRef} className="relative w-full lg:pl-16">
                 {projects.map((project, i) => (
                     <AllProjectCard
                         key={project._id}
