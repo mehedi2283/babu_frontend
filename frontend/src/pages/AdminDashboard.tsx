@@ -4,6 +4,52 @@ import api from '../api';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 
+function DeleteModal({ isOpen, onClose, onConfirm, title, message }: any) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            className="relative bg-[#12131c] border border-white/10 p-6 rounded-2xl shadow-2xl w-full max-w-sm"
+          >
+            <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-4 border border-red-500/20">
+              <svg className="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+            <p className="text-sm text-white/60 mb-6">{message}</p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => { onConfirm(); onClose(); }}
+                className="px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20"
+              >
+                Delete
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 export default function AdminDashboard({ setAuth }: any) {
   const [theme, setTheme] = useState(localStorage.getItem('adminTheme') || 'dark');
   const [activeTab, setActiveTab] = useState('projects');
@@ -163,6 +209,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
   const [uploading, setUploading] = useState(false);
   const [techLogos, setTechLogos] = useState<string[]>([]);
   const [stats, setStats] = useState<{ label: string, value: string, description: string }[]>([]);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     if (editingProject) {
@@ -204,15 +251,22 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
   const removeStat = (i: number) => setStats(stats.filter((_, idx) => idx !== i));
   const removeTechLogo = (i: number) => setTechLogos(techLogos.filter((_, idx) => idx !== i));
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Delete this project?')) {
-      try { await api.delete(`/projects/${id}`); notify('Project deleted'); refresh(); }
-      catch { notify('Failed to delete', 'error'); }
-    }
+  const handleDeleteConfirm = async () => {
+    if (!deleteId) return;
+    try { await api.delete(`/projects/${deleteId}`); notify('Project deleted'); refresh(); }
+    catch { notify('Failed to delete', 'error'); }
+    setDeleteId(null);
   };
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+      <DeleteModal
+        isOpen={!!deleteId}
+        onClose={() => setDeleteId(null)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Project"
+        message="Are you sure you want to delete this project? This action cannot be undone."
+      />
       {/* Form */}
       <div className="xl:col-span-5">
         <div className="bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-white/[0.06] sticky top-24">
@@ -355,7 +409,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
               <button onClick={() => setEditingProject(project)} className="p-2.5 text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               </button>
-              <button onClick={() => handleDelete(project._id)} className="p-2.5 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+              <button onClick={() => setDeleteId(project._id)} className="p-2.5 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
               </button>
             </div>
@@ -369,6 +423,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
 function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEditingTestimonial, notify }: any) {
   const { register, handleSubmit, reset, setValue, watch } = useForm();
   const [uploading, setUploading] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     if (editingTestimonial) {
@@ -396,15 +451,22 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
     catch { console.error('Upload failed'); } finally { setUploading(false); }
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Delete this testimonial?')) {
-      try { await api.delete(`/testimonials/${id}`); notify('Testimonial deleted'); refresh(); }
-      catch { notify('Failed to delete', 'error'); }
-    }
+  const handleDeleteConfirm = async () => {
+    if (!deleteId) return;
+    try { await api.delete(`/testimonials/${deleteId}`); notify('Testimonial deleted'); refresh(); }
+    catch { notify('Failed to delete', 'error'); }
+    setDeleteId(null);
   };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <DeleteModal
+        isOpen={!!deleteId}
+        onClose={() => setDeleteId(null)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Client"
+        message="Are you sure you want to delete this client testimonial? This action cannot be undone."
+      />
       {/* Form */}
       <div className="lg:col-span-5">
         <div className="bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-white/[0.06] sticky top-24">
@@ -508,7 +570,7 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
                 <button onClick={() => setEditingTestimonial(t)} className="p-2 text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                 </button>
-                <button onClick={() => handleDelete(t._id)} className="p-2 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+                <button onClick={() => setDeleteId(t._id)} className="p-2 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
               </div>
