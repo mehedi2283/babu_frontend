@@ -524,6 +524,7 @@ function ProfileManager({ profile, refresh, notify }: any) {
   const { register, handleSubmit, setValue, watch } = useForm();
   const [uploading, setUploading] = useState(false);
   const [logos, setLogos] = useState<{ name: string, imageUrl: string }[]>([]);
+  const [clientLogos, setClientLogos] = useState<{ name: string, imageUrl: string }[]>([]);
 
   useEffect(() => {
     if (profile) {
@@ -538,11 +539,12 @@ function ProfileManager({ profile, refresh, notify }: any) {
       setValue('socialLinks.instagram', profile.socialLinks?.instagram);
       setValue('testimonialTimer', profile.testimonialTimer || 5);
       setLogos(profile.logos || []);
+      setClientLogos(profile.clientLogos || []);
     }
   }, [profile, setValue]);
 
   const onSubmit = async (data: any) => {
-    try { await api.put('/profile', { ...data, logos }); refresh(); notify('Settings saved!'); }
+    try { await api.put('/profile', { ...data, logos, clientLogos }); refresh(); notify('Settings saved!'); }
     catch { notify('Failed to save settings', 'error'); }
   };
 
@@ -560,8 +562,18 @@ function ProfileManager({ profile, refresh, notify }: any) {
     catch { console.error('Upload failed'); } finally { setUploading(false); }
   };
 
+  const handleClientLogoUpload = async (e: any) => {
+    const file = e.target.files[0]; if (!file) return;
+    const formData = new FormData(); formData.append('image', file); setUploading(true);
+    try { const res = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }); setClientLogos([...clientLogos, { name: '', imageUrl: res.data.url }]); }
+    catch { console.error('Upload failed'); } finally { setUploading(false); }
+  };
+
   const updateLogoName = (i: number, name: string) => { const l = [...logos]; l[i].name = name; setLogos(l); };
   const removeLogo = (i: number) => setLogos(logos.filter((_, idx) => idx !== i));
+
+  const updateClientLogoName = (i: number, name: string) => { const l = [...clientLogos]; l[i].name = name; setClientLogos(l); };
+  const removeClientLogo = (i: number) => setClientLogos(clientLogos.filter((_, idx) => idx !== i));
 
   return (
     <div className="bg-white/[0.03] backdrop-blur-xl p-8 rounded-3xl border border-white/[0.06] max-w-4xl mx-auto">
@@ -632,6 +644,23 @@ function ProfileManager({ profile, refresh, notify }: any) {
             ))}
             <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-white/30 hover:text-white/60 font-medium text-sm">
               + Add Logo <input type="file" onChange={handleLogoUpload} className="hidden" />
+            </label>
+          </div>
+        </div>
+
+        {/* Client / Company Logos */}
+        <div className="space-y-4">
+          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Client / Company Logos</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {clientLogos.map((logo, i) => (
+              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] group">
+                <img src={logo.imageUrl} className="w-8 h-8 object-contain bg-white/5 p-1 rounded-lg" />
+                <input value={logo.name} onChange={e => updateClientLogoName(i, e.target.value)} placeholder="Name" className="flex-1 bg-transparent text-sm text-white/80 outline-none" />
+                <button type="button" onClick={() => removeClientLogo(i)} className="text-red-400 opacity-0 group-hover:opacity-100 p-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
+              </div>
+            ))}
+            <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-white/30 hover:text-white/60 font-medium text-sm">
+              + Add Client Logo <input type="file" onChange={handleClientLogoUpload} className="hidden" />
             </label>
           </div>
         </div>
