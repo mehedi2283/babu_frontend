@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Navbar({ profile }: any) {
+  useEffect(() => {
+    if (profile?.navbarLogo) {
+      let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = profile.navbarLogo;
+    }
+  }, [profile?.navbarLogo]);
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     const element = document.getElementById(id);
     if (element) {

@@ -55,9 +55,21 @@ export default function AdminDashboard({ setAuth }: any) {
   const [activeTab, setActiveTab] = useState('projects');
   const [projects, setProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<any>(null);
   const [editingProject, setEditingProject] = useState(null);
   const [editingTestimonial, setEditingTestimonial] = useState(null);
+
+  useEffect(() => {
+    if (profile?.navbarLogo) {
+      let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = profile.navbarLogo;
+    }
+  }, [profile?.navbarLogo]);
   const [notification, setNotification] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
   const navigate = useNavigate();
 
