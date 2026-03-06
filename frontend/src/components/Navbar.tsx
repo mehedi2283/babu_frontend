@@ -11,7 +11,7 @@ export default function Navbar({ profile }: any) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 py-4 text-black backdrop-blur-xl bg-white/80 px-[4%] transition-all duration-300">
+    <nav className="fixed top-0 left-0 w-full z-[100] py-4 text-black backdrop-blur-2xl bg-white/40 border-b border-black/5 px-[4%] transition-all duration-300 shadow-sm">
       <div className="flex justify-between items-center">
         <Link to="/" className="flex items-center group">
           {profile?.navbarLogo ? (
