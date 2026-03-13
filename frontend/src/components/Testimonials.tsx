@@ -19,6 +19,8 @@ export default function Testimonials({ profile }: any) {
   const [selectedTestimonial, setSelectedTestimonial] = useState<any | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const sourceLogos = profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos;
+  const marqueeLogos = [...sourceLogos, ...sourceLogos];
 
   useEffect(() => {
     fetchTestimonials();
@@ -81,11 +83,11 @@ export default function Testimonials({ profile }: any) {
         {/* Logo Carousel */}
         <div className="relative mb-24 overflow-hidden py-10 border-y border-gray-100">
           <motion.div
-            className="flex gap-14 whitespace-nowrap"
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="flex gap-14 w-max whitespace-nowrap"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
           >
-            {[...(profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos), ...(profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos)].map((logo: any, i) => (
+            {marqueeLogos.map((logo: any, i) => (
               <div key={i} className="flex items-center gap-4 group cursor-pointer min-w-max">
                 <img
                   src={logo.url || logo.imageUrl}
