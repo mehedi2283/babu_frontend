@@ -81,19 +81,19 @@ export default function Testimonials({ profile }: any) {
         {/* Logo Carousel */}
         <div className="relative mb-24 overflow-hidden py-10 border-y border-gray-100">
           <motion.div
-            className="flex gap-20 whitespace-nowrap"
+            className="flex gap-14 whitespace-nowrap"
             animate={{ x: [0, -1000] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
             {[...(profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos), ...(profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos)].map((logo: any, i) => (
-              <div key={i} className="flex items-center gap-3 group cursor-pointer">
+              <div key={i} className="flex items-center gap-4 group cursor-pointer min-w-max">
                 <img
                   src={logo.url || logo.imageUrl}
                   alt={logo.name}
-                  className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                  className="h-12 md:h-14 w-auto max-w-[180px] object-contain transition-all duration-300 group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
-                <span className="text-xl font-bold tracking-tighter text-gray-300 group-hover:text-gray-900 transition-colors">
+                <span className="text-2xl font-bold tracking-tighter text-gray-300 group-hover:text-gray-900 transition-colors">
                   {logo.name}
                 </span>
               </div>

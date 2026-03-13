@@ -34,18 +34,18 @@ export default function Hero({ profile }: any) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-12 flex flex-wrap gap-x-12 gap-y-8 items-center"
+          className="mt-12 flex flex-wrap gap-x-10 gap-y-6 items-center"
         >
           {logos.map((logo: any, index: number) => {
             const imageUrl = typeof logo === 'string' ? logo : logo?.imageUrl;
             if (!imageUrl) return null;
             return (
-              <div key={index} className="flex items-center shrink-0">
+              <div key={index} className="flex items-center shrink-0 h-14">
                 <img 
                   src={imageUrl} 
                   alt={logo.name || "Tool Logo"} 
                   referrerPolicy="no-referrer"
-                  className="h-6 md:h-7 w-auto object-contain transition-transform hover:scale-110 duration-300" 
+                  className="h-10 md:h-12 w-auto max-w-[180px] object-contain transition-transform hover:scale-110 duration-300" 
                 />
               </div>
             );
