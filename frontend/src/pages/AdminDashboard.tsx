@@ -20,19 +20,19 @@ function DeleteModal({ isOpen, onClose, onConfirm, title, message }: any) {
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="relative bg-[#12131c] border border-white/10 p-6 rounded-2xl shadow-2xl w-full max-w-sm"
+            className="relative bg-white dark:bg-[#12131c] border border-gray-200 dark:border-white/10 p-6 rounded-2xl shadow-2xl w-full max-w-sm"
           >
             <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-4 border border-red-500/20">
               <svg className="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-            <p className="text-sm text-white/60 mb-6">{message}</p>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
+            <p className="text-sm text-gray-500 dark:text-white/60 mb-6">{message}</p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                className="px-4 py-2 rounded-xl text-sm font-medium text-gray-500 dark:text-white/60 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
               >
                 Cancel
               </button>
@@ -112,7 +112,7 @@ export default function AdminDashboard({ setAuth }: any) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0c0d14]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0c0d14]">
       {/* Notification */}
       <AnimatePresence>
         {notification && (
@@ -132,23 +132,23 @@ export default function AdminDashboard({ setAuth }: any) {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="bg-[#12131c]/80 backdrop-blur-2xl border-b border-white/[0.06] sticky top-0 z-50">
+      <header className="bg-white/80 dark:bg-[#12131c]/80 backdrop-blur-2xl border-b border-gray-200 dark:border-white/[0.06] sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-10 h-16 flex justify-between items-center">
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-3 group">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               </div>
-              <span className="text-lg font-bold text-white/90 tracking-tight">Studio</span>
+              <span className="text-lg font-bold text-gray-900 dark:text-white/90 tracking-tight">Studio</span>
             </Link>
-            <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/[0.06]">
+            <nav className="hidden md:flex items-center gap-1 bg-gray-100 dark:bg-white/[0.04] p-1 rounded-xl border border-gray-200 dark:border-white/[0.06]">
               {tabs.map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${activeTab === tab.id
-                    ? 'text-white'
-                    : 'text-white/40 hover:text-white/70'
+                    ? 'text-gray-900 dark:text-white'
+                    : 'text-gray-400 dark:text-white/40 hover:text-gray-700 dark:hover:text-white/70'
                     }`}
                 >
                   {activeTab === tab.id && (
@@ -161,7 +161,7 @@ export default function AdminDashboard({ setAuth }: any) {
                   <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={tab.icon} /></svg>
                   <span className="relative z-10">{tab.label}</span>
                   {tab.count !== undefined && (
-                    <span className={`relative z-10 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${activeTab === tab.id ? 'bg-violet-500/30 text-violet-300' : 'bg-white/[0.06] text-white/30'}`}>{tab.count}</span>
+                    <span className={`relative z-10 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${activeTab === tab.id ? 'bg-violet-500/30 text-violet-600 dark:text-violet-300' : 'bg-gray-200 dark:bg-white/[0.06] text-gray-600 dark:text-white/30'}`}>{tab.count}</span>
                   )}
                 </button>
               ))}
@@ -187,9 +187,9 @@ export default function AdminDashboard({ setAuth }: any) {
       </header>
 
       {/* Mobile tabs */}
-      <div className="md:hidden flex gap-1 p-2 mx-4 mt-4 bg-white/[0.04] rounded-xl border border-white/[0.06]">
+      <div className="md:hidden flex gap-1 p-2 mx-4 mt-4 bg-gray-100 dark:bg-white/[0.04] rounded-xl border border-gray-200 dark:border-white/[0.06]">
         {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-1 py-2.5 rounded-lg text-xs font-medium transition-all ${activeTab === tab.id ? 'bg-violet-500/20 text-violet-300 border border-violet-500/20' : 'text-white/40'}`}>
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-1 py-2.5 rounded-lg text-xs font-medium transition-all ${activeTab === tab.id ? 'bg-violet-500/20 text-violet-300 border border-violet-500/20' : 'text-gray-400 dark:text-white/40'}`}>
             {tab.label}
           </button>
         ))}
@@ -213,8 +213,8 @@ export default function AdminDashboard({ setAuth }: any) {
 }
 
 /* ─── Input helper ─── */
-const inputClass = "w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white/90 placeholder-white/20 focus:border-violet-500/40 focus:bg-violet-500/[0.04] focus:ring-2 focus:ring-violet-500/10 outline-none transition-all text-sm";
-const labelClass = "text-[11px] font-semibold text-white/30 uppercase tracking-widest";
+const inputClass = "w-full px-4 py-3 bg-gray-100 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-gray-900 dark:text-white/90 placeholder-gray-400 dark:placeholder-white/20 focus:border-violet-500/40 focus:bg-violet-50 dark:focus:bg-violet-500/[0.04] focus:ring-2 focus:ring-violet-500/10 outline-none transition-all text-sm";
+const labelClass = "text-[11px] font-semibold text-gray-500 dark:text-white/30 uppercase tracking-widest";
 
 function ProjectsManager({ projects, refresh, editingProject, setEditingProject, notify }: any) {
   const { register, handleSubmit, reset, setValue, watch } = useForm();
@@ -281,7 +281,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
       />
       {/* Form */}
       <div className="xl:col-span-5">
-        <div className="bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-white/[0.06] sticky top-24">
+        <div className="bg-white dark:bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-gray-200 dark:border-white/[0.06] shadow-sm dark:shadow-none sticky top-24">
           <div className="flex items-center gap-3 mb-7">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${editingProject ? 'bg-amber-500/15' : 'bg-violet-500/15'}`}>
               <svg className={`w-5 h-5 ${editingProject ? 'text-amber-400' : 'text-violet-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,8 +289,8 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
               </svg>
             </div>
             <div>
-              <h3 className="text-base font-bold text-white/90">{editingProject ? 'Edit Project' : 'New Project'}</h3>
-              <p className="text-xs text-white/30">{editingProject ? 'Update details' : 'Create a new entry'}</p>
+              <h3 className="text-base font-bold text-gray-900 dark:text-white/90">{editingProject ? 'Edit Project' : 'New Project'}</h3>
+              <p className="text-xs text-gray-400 dark:text-white/30">{editingProject ? 'Update details' : 'Create a new entry'}</p>
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -315,8 +315,8 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
             <div className="space-y-1.5">
               <label className={labelClass}>Cover Image</label>
               {watch('imageUrl') ? (
-                <div className="relative group rounded-xl overflow-hidden border border-white/[0.08]">
-                  <img src={watch('imageUrl')} alt="Preview" className="w-full h-36 object-cover" />
+                <div className="relative group rounded-xl overflow-hidden border border-gray-200 dark:border-white/[0.08] aspect-square">
+                  <img src={watch('imageUrl')} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <label className="cursor-pointer px-4 py-2 bg-white/10 backdrop-blur rounded-lg text-sm font-medium text-white hover:bg-white/20 transition border border-white/10">
                       Change <input type="file" onChange={handleImageUpload} className="hidden" />
@@ -324,9 +324,9 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
                   </div>
                 </div>
               ) : (
-                <label className="cursor-pointer flex flex-col items-center justify-center h-28 border-2 border-dashed border-white/10 rounded-xl hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-all">
-                  <svg className="w-7 h-7 text-white/20 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                  <span className="text-xs text-white/30 font-medium">Click to upload</span>
+                <label className="cursor-pointer flex flex-col items-center justify-center h-28 border-2 border-dashed border-gray-300 dark:border-white/10 rounded-xl hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-all">
+                  <svg className="w-7 h-7 text-gray-300 dark:text-white/20 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  <span className="text-xs text-gray-400 dark:text-white/30 font-medium">Click to upload</span>
                   <input type="file" onChange={handleImageUpload} className="hidden" />
                 </label>
               )}
@@ -335,24 +335,24 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
             </div>
 
             {/* Tech Logos */}
-            <div className="space-y-2.5 pt-4 border-t border-white/[0.06]">
+            <div className="space-y-2.5 pt-4 border-t border-gray-200 dark:border-white/[0.06]">
               <label className={labelClass}>Tech Stack</label>
               <div className="flex flex-wrap gap-2">
                 {techLogos.map((logo, i) => (
                   <div key={i} className="relative group">
-                    <img src={logo} alt="Tech" className="h-10 w-auto border border-white/[0.08] p-1.5 rounded-lg bg-white/[0.03]" />
+                    <img src={logo} alt="Tech" className="h-10 w-auto border border-gray-200 dark:border-white/[0.08] p-1.5 rounded-lg bg-gray-50 dark:bg-white/[0.03]" />
                     <button type="button" onClick={() => removeTechLogo(i)} className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shadow opacity-0 group-hover:opacity-100 transition-opacity">×</button>
                   </div>
                 ))}
-                <label className="cursor-pointer h-10 w-10 border-2 border-dashed border-white/10 rounded-lg flex items-center justify-center hover:border-violet-500/40 transition-all">
-                  <span className="text-lg text-white/20">+</span>
+                <label className="cursor-pointer h-10 w-10 border-2 border-dashed border-gray-300 dark:border-white/10 rounded-lg flex items-center justify-center hover:border-violet-500/40 transition-all">
+                  <span className="text-lg text-gray-300 dark:text-white/20">+</span>
                   <input type="file" onChange={handleTechLogoUpload} className="hidden" />
                 </label>
               </div>
             </div>
 
             {/* Stats */}
-            <div className="space-y-2.5 pt-4 border-t border-white/[0.06]">
+            <div className="space-y-2.5 pt-4 border-t border-gray-200 dark:border-white/[0.06]">
               <div className="flex justify-between items-center">
                 <label className={labelClass}>Stats</label>
                 <button type="button" onClick={addStat} className="text-xs font-bold text-violet-400 hover:text-violet-300 flex items-center gap-1">
@@ -361,7 +361,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
                 </button>
               </div>
               {stats.map((stat, i) => (
-                <div key={i} className="space-y-2 p-3 bg-white/[0.02] rounded-xl border border-white/[0.06]">
+                <div key={i} className="space-y-2 p-3 bg-gray-50 dark:bg-white/[0.02] rounded-xl border border-gray-200 dark:border-white/[0.06]">
                   <div className="flex gap-2 items-center">
                     <input placeholder="Value" value={stat.value} onChange={(e) => updateStat(i, 'value', e.target.value)} className={inputClass} />
                     <input placeholder="Label" value={stat.label} onChange={(e) => updateStat(i, 'label', e.target.value)} className={inputClass} />
@@ -377,7 +377,7 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
                 {editingProject ? '✓ Update' : '↑ Publish'}
               </button>
               {editingProject && (
-                <button type="button" onClick={() => { setEditingProject(null); reset(); setTechLogos([]); setStats([]); }} className="px-5 py-3.5 border border-white/[0.08] rounded-xl text-sm font-medium text-white/50 hover:text-white/80 hover:bg-white/[0.04] transition-all">
+                <button type="button" onClick={() => { setEditingProject(null); reset(); setTechLogos([]); setStats([]); }} className="px-5 py-3.5 border border-gray-200 dark:border-white/[0.08] rounded-xl text-sm font-medium text-gray-500 dark:text-white/50 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-100 dark:hover:bg-white/[0.04] transition-all">
                   Cancel
                 </button>
               )}
@@ -389,15 +389,15 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
       {/* Project Cards */}
       <div className="xl:col-span-7 space-y-3">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xs font-bold text-white/20 uppercase tracking-[0.2em]">Projects ({projects.length})</h3>
+          <h3 className="text-xs font-bold text-gray-400 dark:text-white/20 uppercase tracking-[0.2em]">Projects ({projects.length})</h3>
         </div>
         {projects.length === 0 && (
-          <div className="bg-white/[0.02] rounded-2xl border border-white/[0.06] p-16 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-white/[0.04] flex items-center justify-center mx-auto mb-4">
-              <svg className="w-7 h-7 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" /></svg>
+          <div className="bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-gray-200 dark:border-white/[0.06] p-16 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-gray-100 dark:bg-white/[0.04] flex items-center justify-center mx-auto mb-4">
+              <svg className="w-7 h-7 text-gray-300 dark:text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" /></svg>
             </div>
-            <p className="text-white/40 font-medium">No projects yet</p>
-            <p className="text-white/20 text-sm mt-1">Create your first project</p>
+            <p className="text-gray-500 dark:text-white/40 font-medium">No projects yet</p>
+            <p className="text-gray-400 dark:text-white/20 text-sm mt-1">Create your first project</p>
           </div>
         )}
         {projects.map((project: any) => (
@@ -405,23 +405,23 @@ function ProjectsManager({ projects, refresh, editingProject, setEditingProject,
             key={project._id}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/[0.03] p-4 rounded-2xl border border-white/[0.06] flex gap-4 items-center group hover:border-violet-500/20 hover:bg-violet-500/[0.02] transition-all duration-300"
+            className="bg-white dark:bg-white/[0.03] p-4 rounded-2xl border border-gray-200 dark:border-white/[0.06] flex gap-4 items-center group hover:border-violet-500/20 hover:bg-violet-500/[0.02] transition-all duration-300"
           >
-            <img src={project.imageUrl} alt={project.title} className="w-24 h-18 object-cover rounded-xl bg-white/[0.04] flex-shrink-0" />
+            <img src={project.imageUrl} alt={project.title} className="w-24 h-18 object-cover rounded-xl bg-gray-100 dark:bg-white/[0.04] flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-white/90 truncate">{project.title}</h4>
-              <p className="text-white/30 text-xs line-clamp-1 mt-0.5">{project.description}</p>
+              <h4 className="text-sm font-bold text-gray-900 dark:text-white/90 truncate">{project.title}</h4>
+              <p className="text-gray-400 dark:text-white/30 text-xs line-clamp-1 mt-0.5">{project.description}</p>
               <div className="flex gap-1.5 mt-2">
                 {project.techLogos?.slice(0, 4).map((logo: string, i: number) => (
-                  <img key={i} src={logo} className="h-4 w-auto opacity-40" alt="tech" />
+                  <img key={i} src={logo} className="h-4 w-auto" alt="tech" />
                 ))}
               </div>
             </div>
             <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => setEditingProject(project)} className="p-2.5 text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
+              <button onClick={() => setEditingProject(project)} className="p-2.5 text-gray-400 dark:text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               </button>
-              <button onClick={() => setDeleteId(project._id)} className="p-2.5 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+              <button onClick={() => setDeleteId(project._id)} className="p-2.5 text-gray-400 dark:text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
               </button>
             </div>
@@ -481,7 +481,7 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
       />
       {/* Form */}
       <div className="lg:col-span-5">
-        <div className="bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-white/[0.06] sticky top-24">
+        <div className="bg-white dark:bg-white/[0.03] backdrop-blur-xl p-7 rounded-2xl border border-gray-200 dark:border-white/[0.06] shadow-sm dark:shadow-none sticky top-24">
           <div className="flex items-center gap-3 mb-7">
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${editingTestimonial ? 'bg-amber-500/15' : 'bg-cyan-500/15'}`}>
               <svg className={`w-5 h-5 ${editingTestimonial ? 'text-amber-400' : 'text-cyan-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -489,8 +489,8 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
               </svg>
             </div>
             <div>
-              <h3 className="text-base font-bold text-white/90">{editingTestimonial ? 'Edit Testimonial' : 'Add Testimonial'}</h3>
-              <p className="text-xs text-white/30">{editingTestimonial ? 'Update client feedback' : 'Add client feedback'}</p>
+              <h3 className="text-base font-bold text-gray-900 dark:text-white/90">{editingTestimonial ? 'Edit Testimonial' : 'Add Testimonial'}</h3>
+              <p className="text-xs text-gray-400 dark:text-white/30">{editingTestimonial ? 'Update client feedback' : 'Add client feedback'}</p>
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -510,8 +510,8 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
               <div className="space-y-1.5">
                 <label className={labelClass}>Accent Color</label>
                 <div className="flex items-center gap-3">
-                  <input {...register('color')} type="color" className="w-10 h-10 p-0.5 bg-transparent border border-white/[0.08] rounded-lg cursor-pointer" />
-                  <span className="text-xs text-white/20">{watch('color') || '#8B5CF6'}</span>
+                  <input {...register('color')} type="color" className="w-10 h-10 p-0.5 bg-transparent border border-gray-200 dark:border-white/[0.08] rounded-lg cursor-pointer" />
+                  <span className="text-xs text-gray-400 dark:text-white/20">{watch('color') || '#8B5CF6'}</span>
                 </div>
               </div>
               <div className="space-y-1.5">
@@ -531,8 +531,8 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
                     </label>
                   </div>
                 ) : (
-                  <label className="cursor-pointer w-14 h-14 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center hover:border-violet-500/40 transition-all">
-                    <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                  <label className="cursor-pointer w-14 h-14 border-2 border-dashed border-gray-300 dark:border-white/10 rounded-full flex items-center justify-center hover:border-violet-500/40 transition-all">
+                    <svg className="w-5 h-5 text-gray-300 dark:text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     <input type="file" onChange={handleAvatarUpload} className="hidden" />
                   </label>
                 )}
@@ -545,7 +545,7 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
                 {editingTestimonial ? '✓ Update' : '+ Add Testimonial'}
               </button>
               {editingTestimonial && (
-                <button type="button" onClick={() => { setEditingTestimonial(null); reset(); }} className="px-5 py-3.5 border border-white/[0.08] rounded-xl text-sm font-medium text-white/50 hover:text-white/80 hover:bg-white/[0.04] transition-all">
+                <button type="button" onClick={() => { setEditingTestimonial(null); reset(); }} className="px-5 py-3.5 border border-gray-200 dark:border-white/[0.08] rounded-xl text-sm font-medium text-gray-500 dark:text-white/50 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-100 dark:hover:bg-white/[0.04] transition-all">
                   Cancel
                 </button>
               )}
@@ -556,33 +556,33 @@ function TestimonialsManager({ testimonials, refresh, editingTestimonial, setEdi
 
       {/* Testimonial Cards */}
       <div className="lg:col-span-7 space-y-3">
-        <h3 className="text-xs font-bold text-white/20 uppercase tracking-[0.2em] mb-4">Client Feedback ({testimonials.length})</h3>
+        <h3 className="text-xs font-bold text-gray-400 dark:text-white/20 uppercase tracking-[0.2em] mb-4">Client Feedback ({testimonials.length})</h3>
         {testimonials.map((t: any) => (
           <motion.div
             key={t._id}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/[0.03] p-5 rounded-2xl border border-white/[0.06] group hover:border-violet-500/20 hover:bg-violet-500/[0.02] transition-all duration-300"
+            className="bg-white dark:bg-white/[0.03] p-5 rounded-2xl border border-gray-200 dark:border-white/[0.06] group hover:border-violet-500/20 hover:bg-violet-500/[0.02] transition-all duration-300"
           >
             <div className="flex gap-4 items-start">
-              <img src={t.avatar || 'https://via.placeholder.com/150'} alt={t.name} className="w-12 h-12 object-cover rounded-full border-2 border-white/[0.08] flex-shrink-0" />
+              <img src={t.avatar || 'https://via.placeholder.com/150'} alt={t.name} className="w-12 h-12 object-cover rounded-full border-2 border-gray-200 dark:border-white/[0.08] flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <h4 className="text-sm font-bold text-white/90">{t.name}</h4>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white/90">{t.name}</h4>
                   <div className="flex gap-0.5">
                     {[...Array(t.rating || 5)].map((_, i) => (
                       <svg key={i} className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                     ))}
                   </div>
                 </div>
-                <p className="text-white/30 text-xs mb-2">{t.role}</p>
-                <p className="text-white/50 text-sm line-clamp-2 italic leading-relaxed">"{t.content}"</p>
+                <p className="text-gray-400 dark:text-white/30 text-xs mb-2">{t.role}</p>
+                <p className="text-gray-500 dark:text-white/50 text-sm line-clamp-2 italic leading-relaxed">"{t.content}"</p>
               </div>
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                <button onClick={() => setEditingTestimonial(t)} className="p-2 text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
+                <button onClick={() => setEditingTestimonial(t)} className="p-2 text-gray-400 dark:text-white/30 hover:text-violet-400 hover:bg-violet-500/10 rounded-lg transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                 </button>
-                <button onClick={() => setDeleteId(t._id)} className="p-2 text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+                <button onClick={() => setDeleteId(t._id)} className="p-2 text-gray-400 dark:text-white/30 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
               </div>
@@ -630,17 +630,47 @@ function ProfileManager({ profile, refresh, notify }: any) {
   };
 
   const handleLogoUpload = async (e: any) => {
-    const file = e.target.files[0]; if (!file) return;
-    const formData = new FormData(); formData.append('image', file); setUploading(true);
-    try { const res = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }); setLogos([...logos, { name: '', imageUrl: res.data.url }]); }
-    catch { console.error('Upload failed'); } finally { setUploading(false); }
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setUploading(true);
+    try {
+      const uploadedLogos = await Promise.all(files.map(async (file: any) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        return { name: '', imageUrl: res.data.url };
+      }));
+
+      setLogos(prev => [...prev, ...uploadedLogos]);
+    } catch {
+      console.error('Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   };
 
   const handleClientLogoUpload = async (e: any) => {
-    const file = e.target.files[0]; if (!file) return;
-    const formData = new FormData(); formData.append('image', file); setUploading(true);
-    try { const res = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }); setClientLogos([...clientLogos, { name: '', imageUrl: res.data.url }]); }
-    catch { console.error('Upload failed'); } finally { setUploading(false); }
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setUploading(true);
+    try {
+      const uploadedLogos = await Promise.all(files.map(async (file: any) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await api.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        return { name: '', imageUrl: res.data.url };
+      }));
+
+      setClientLogos(prev => [...prev, ...uploadedLogos]);
+    } catch {
+      console.error('Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   };
 
   const updateLogoName = (i: number, name: string) => { const l = [...logos]; l[i].name = name; setLogos(l); };
@@ -650,13 +680,13 @@ function ProfileManager({ profile, refresh, notify }: any) {
   const removeClientLogo = (i: number) => setClientLogos(clientLogos.filter((_, idx) => idx !== i));
 
   return (
-    <div className="bg-white/[0.03] backdrop-blur-xl p-8 rounded-3xl border border-white/[0.06] max-w-4xl mx-auto">
-      <h3 className="text-xl font-bold mb-8 text-white/90">Profile & Brand Settings</h3>
+    <div className="bg-white dark:bg-white/[0.03] backdrop-blur-xl p-8 rounded-3xl border border-gray-200 dark:border-white/[0.06] shadow-sm dark:shadow-none max-w-4xl mx-auto">
+      <h3 className="text-xl font-bold mb-8 text-gray-900 dark:text-white/90">Profile & Brand Settings</h3>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
 
         {/* Main Info */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Hero Section</h4>
+          <h4 className="text-xs font-bold text-gray-500 dark:text-white/30 uppercase tracking-widest border-b border-gray-200 dark:border-white/[0.06] pb-2">Hero Section</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1.5"><label className={labelClass}>Hero Title</label><input {...register('heroTitle')} className={inputClass} /></div>
             <div className="space-y-1.5"><label className={labelClass}>Hero Subtitle</label><input {...register('heroSubtitle')} className={inputClass} /></div>
@@ -665,7 +695,7 @@ function ProfileManager({ profile, refresh, notify }: any) {
 
         {/* Global branding */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Branding & Contact</h4>
+          <h4 className="text-xs font-bold text-gray-500 dark:text-white/30 uppercase tracking-widest border-b border-gray-200 dark:border-white/[0.06] pb-2">Branding & Contact</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1.5"><label className={labelClass}>Contact Email</label><input {...register('email')} className={inputClass} /></div>
             <div className="space-y-1.5"><label className={labelClass}>Testimonial Timer (sec)</label><input {...register('testimonialTimer')} type="number" className={inputClass} /></div>
@@ -674,16 +704,16 @@ function ProfileManager({ profile, refresh, notify }: any) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className={labelClass}>Navbar Logo</label>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                {watch('navbarLogo') ? <img src={watch('navbarLogo')} className="h-10 w-auto bg-white/10 p-2 rounded-lg" alt="logo" /> : <div className="h-10 w-10 bg-white/[0.04] rounded-lg"></div>}
-                <label className="cursor-pointer text-xs font-semibold bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors">Change <input type="file" onChange={e => handleImageUpload(e, 'navbarLogo')} className="hidden" /></label>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/[0.06]">
+                {watch('navbarLogo') ? <img src={watch('navbarLogo')} className="h-10 w-auto bg-gray-200 dark:bg-white/10 p-2 rounded-lg" alt="logo" /> : <div className="h-10 w-10 bg-gray-100 dark:bg-white/[0.04] rounded-lg"></div>}
+                <label className="cursor-pointer text-xs font-semibold text-gray-600 dark:text-white bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 px-3 py-2 rounded-lg transition-colors">Change <input type="file" onChange={e => handleImageUpload(e, 'navbarLogo')} className="hidden" /></label>
               </div>
             </div>
             <div className="space-y-2">
               <label className={labelClass}>About Image</label>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                {watch('profileImage') ? <img src={watch('profileImage')} className="h-10 w-10 object-cover rounded-lg" alt="profile" /> : <div className="h-10 w-10 bg-white/[0.04] rounded-lg"></div>}
-                <label className="cursor-pointer text-xs font-semibold bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors">Change <input type="file" onChange={e => handleImageUpload(e, 'profileImage')} className="hidden" /></label>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/[0.06]">
+                {watch('profileImage') ? <img src={watch('profileImage')} className="h-10 w-10 object-cover rounded-lg" alt="profile" /> : <div className="h-10 w-10 bg-gray-100 dark:bg-white/[0.04] rounded-lg"></div>}
+                <label className="cursor-pointer text-xs font-semibold text-gray-600 dark:text-white bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 px-3 py-2 rounded-lg transition-colors">Change <input type="file" onChange={e => handleImageUpload(e, 'profileImage')} className="hidden" /></label>
               </div>
             </div>
           </div>
@@ -697,7 +727,7 @@ function ProfileManager({ profile, refresh, notify }: any) {
 
         {/* Socials */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Social Links</h4>
+          <h4 className="text-xs font-bold text-gray-500 dark:text-white/30 uppercase tracking-widest border-b border-gray-200 dark:border-white/[0.06] pb-2">Social Links</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1.5"><label className={labelClass}>LinkedIn</label><input {...register('socialLinks.linkedin')} className={inputClass} placeholder="https://..." /></div>
             <div className="space-y-1.5"><label className={labelClass}>Facebook</label><input {...register('socialLinks.facebook')} className={inputClass} placeholder="https://..." /></div>
@@ -707,34 +737,34 @@ function ProfileManager({ profile, refresh, notify }: any) {
 
         {/* Tool Logos */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Skill / Tool Logos</h4>
+          <h4 className="text-xs font-bold text-gray-500 dark:text-white/30 uppercase tracking-widest border-b border-gray-200 dark:border-white/[0.06] pb-2">Skill / Tool Logos</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {logos.map((logo, i) => (
-              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] group">
-                <img src={logo.imageUrl} className="w-8 h-8 object-contain bg-white/5 p-1 rounded-lg" />
-                <input value={logo.name} onChange={e => updateLogoName(i, e.target.value)} placeholder="Name" className="flex-1 bg-transparent text-sm text-white/80 outline-none" />
+              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/[0.06] group">
+                <img src={logo.imageUrl} className="w-8 h-8 object-contain bg-gray-100 dark:bg-white/5 p-1 rounded-lg" />
+                <input value={logo.name} onChange={e => updateLogoName(i, e.target.value)} placeholder="Name" className="flex-1 bg-transparent text-sm text-gray-700 dark:text-white/80 outline-none" />
                 <button type="button" onClick={() => removeLogo(i)} className="text-red-400 opacity-0 group-hover:opacity-100 p-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
               </div>
             ))}
-            <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-white/30 hover:text-white/60 font-medium text-sm">
-              + Add Logo <input type="file" onChange={handleLogoUpload} className="hidden" />
+            <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-gray-400 dark:text-white/30 hover:text-gray-600 dark:hover:text-white/60 font-medium text-sm">
+              + Add Logo <input type="file" multiple accept="image/*" onChange={handleLogoUpload} className="hidden" />
             </label>
           </div>
         </div>
 
         {/* Client / Company Logos */}
         <div className="space-y-4">
-          <h4 className="text-xs font-bold text-white/30 uppercase tracking-widest border-b border-white/[0.06] pb-2">Client / Company Logos</h4>
+          <h4 className="text-xs font-bold text-gray-500 dark:text-white/30 uppercase tracking-widest border-b border-gray-200 dark:border-white/[0.06] pb-2">Client / Company Logos</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {clientLogos.map((logo, i) => (
-              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.02] border border-white/[0.06] group">
-                <img src={logo.imageUrl} className="w-8 h-8 object-contain bg-white/5 p-1 rounded-lg" />
-                <input value={logo.name} onChange={e => updateClientLogoName(i, e.target.value)} placeholder="Name" className="flex-1 bg-transparent text-sm text-white/80 outline-none" />
+              <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/[0.06] group">
+                <img src={logo.imageUrl} className="w-8 h-8 object-contain bg-gray-100 dark:bg-white/5 p-1 rounded-lg" />
+                <input value={logo.name} onChange={e => updateClientLogoName(i, e.target.value)} placeholder="Name" className="flex-1 bg-transparent text-sm text-gray-700 dark:text-white/80 outline-none" />
                 <button type="button" onClick={() => removeClientLogo(i)} className="text-red-400 opacity-0 group-hover:opacity-100 p-1"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
               </div>
             ))}
-            <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-white/30 hover:text-white/60 font-medium text-sm">
-              + Add Client Logo <input type="file" onChange={handleClientLogoUpload} className="hidden" />
+            <label className="cursor-pointer flex items-center justify-center gap-2 p-3 rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10 hover:border-violet-500/40 hover:bg-violet-500/[0.04] transition-colors text-gray-400 dark:text-white/30 hover:text-gray-600 dark:hover:text-white/60 font-medium text-sm">
+              + Add Client Logo <input type="file" multiple accept="image/*" onChange={handleClientLogoUpload} className="hidden" />
             </label>
           </div>
         </div>
