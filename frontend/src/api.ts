@@ -3,7 +3,7 @@ import axios from 'axios';
 // Use the production URL if deployed, otherwise fallback to /api for local proxy
 const isProd = import.meta.env.PROD;
 const api = axios.create({
-  baseURL: isProd ? 'https://babu-server-9asog4izt-mehedi2283s-projects.vercel.app/api' : '/api',
+  baseURL: isProd ? 'https://babu-server.vercel.app/api' : '/api',
 });
 
 api.interceptors.request.use((config) => {
