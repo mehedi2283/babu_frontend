@@ -17,7 +17,7 @@ export default defineConfig({
     hmr: process.env.DISABLE_HMR !== 'true',
     proxy: {
       '/api': {
-        target: 'https://babu-server.onrender.com',
+        target: 'https://babu-server-9asog4izt-mehedi2283s-projects.vercel.app',
         changeOrigin: true,
       },
     },
