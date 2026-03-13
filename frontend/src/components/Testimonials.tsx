@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api';
 
@@ -19,8 +19,20 @@ export default function Testimonials({ profile }: any) {
   const [selectedTestimonial, setSelectedTestimonial] = useState<any | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const sourceLogos = profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos;
-  const marqueeLogos = [...sourceLogos, ...sourceLogos];
+  const sourceLogos = useMemo(() => {
+    return profile?.clientLogos?.length > 0 ? profile.clientLogos : clientLogos;
+  }, [profile?.clientLogos]);
+
+  const marquee = useMemo(() => {
+    const minItemsPerHalf = 12;
+    const repeats = Math.max(1, Math.ceil(minItemsPerHalf / Math.max(sourceLogos.length, 1)));
+    const oneHalf = Array.from({ length: repeats }).flatMap(() => sourceLogos);
+    return {
+      oneHalf,
+      full: [...oneHalf, ...oneHalf],
+      duration: Math.max(18, oneHalf.length * 2.2),
+    };
+  }, [sourceLogos]);
 
   useEffect(() => {
     fetchTestimonials();
@@ -82,12 +94,11 @@ export default function Testimonials({ profile }: any) {
 
         {/* Logo Carousel */}
         <div className="relative mb-24 overflow-hidden py-10 border-y border-gray-100">
-          <motion.div
-            className="flex gap-14 w-max whitespace-nowrap"
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          <div
+            className="logo-marquee-track flex gap-14 w-max whitespace-nowrap"
+            style={{ animationDuration: `${marquee.duration}s` }}
           >
-            {marqueeLogos.map((logo: any, i) => (
+            {marquee.full.map((logo: any, i) => (
               <div key={i} className="flex items-center gap-4 group cursor-pointer min-w-max">
                 <img
                   src={logo.url || logo.imageUrl}
@@ -100,7 +111,7 @@ export default function Testimonials({ profile }: any) {
                 </span>
               </div>
             ))}
-          </motion.div>
+          </div>
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
           <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
         </div>
